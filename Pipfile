@@ -6,11 +6,14 @@ verify_ssl = true
 [dev-packages]
 autopep8 = "*"
 flake8 = "*"
+django-debug-toolbar = "*"
 
 [packages]
 djangorestframework = "*"
 django-cleanup = "*"
 pillow = "*"
+django-cors-headers = "*"
+django-admin-sortable2 = "*"
 
 [requires]
 python_version = "3.8"

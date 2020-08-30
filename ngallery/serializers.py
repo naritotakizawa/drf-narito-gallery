@@ -1,18 +1,19 @@
 from rest_framework import serializers
-from .models import Category, Tag, Product, Image
+from .models import Category, Product, Image
 
 
 class CategorySerializer(serializers.ModelSerializer):
+    product_count = serializers.IntegerField()
 
     class Meta:
         model = Category
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'product_count')
 
 
-class TagSerializer(serializers.ModelSerializer):
+class SimpleCategorySerializer(serializers.ModelSerializer):
 
     class Meta:
-        model = Tag
+        model = Category
         fields = ('id', 'name')
 
 
@@ -20,7 +21,7 @@ class ImageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Image
-        fields = ('id', 'src', 'alt')
+        fields = ('id', 'src', 'alt', 'width')
 
 
 class SimpleProductSerializer(serializers.ModelSerializer):
@@ -31,10 +32,10 @@ class SimpleProductSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
-    category = CategorySerializer(read_only=True)
-    tags = TagSerializer(read_only=True, many=True)
+    category = SimpleCategorySerializer(read_only=True)
     image_set = ImageSerializer(read_only=True, many=True)
 
     class Meta:
         model = Product
-        fields = ('id', 'title', 'thumbnail', 'category', 'tags', 'text', 'image_set')
+        fields = ('id', 'title', 'thumbnail', 'category', 'text', 'image_set',
+                  'created_at', 'is_auto_order', 'column_width', 'container_width')
