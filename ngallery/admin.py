@@ -7,7 +7,7 @@ from adminsortable2.admin import SortableInlineAdminMixin
 class ImageInline(SortableInlineAdminMixin, admin.TabularInline):
     model = Image
     extra = 5
-    fields = ('preview', 'src', 'width', 'alt')
+    fields = ('preview', 'src', 'alt')
     readonly_fields = ('preview',)
 
     def preview(self, obj):
