@@ -21,7 +21,7 @@ class ImageSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Image
-        fields = ('id', 'src', 'alt', 'width')
+        fields = ('id', 'src', 'alt')
 
 
 class SimpleProductSerializer(serializers.ModelSerializer):
@@ -37,5 +37,4 @@ class ProductSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = ('id', 'title', 'thumbnail', 'category', 'text', 'image_set',
-                  'created_at', 'is_auto_order', 'column_width', 'container_width')
+        fields = ('id', 'title', 'thumbnail', 'category', 'text', 'image_set', 'created_at',)
