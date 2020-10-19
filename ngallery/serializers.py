@@ -2,7 +2,7 @@ from rest_framework import serializers
 from .models import Category, Product, Image
 
 
-class CategorySerializer(serializers.ModelSerializer):
+class CategoryWithProductCountSerializer(serializers.ModelSerializer):
     product_count = serializers.IntegerField()
 
     class Meta:
@@ -10,7 +10,7 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = ('id', 'name', 'product_count')
 
 
-class SimpleCategorySerializer(serializers.ModelSerializer):
+class CategorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Category
@@ -24,15 +24,8 @@ class ImageSerializer(serializers.ModelSerializer):
         fields = ('id', 'src', 'alt')
 
 
-class SimpleProductSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Product
-        fields = ('id', 'title', 'thumbnail')
-
-
 class ProductSerializer(serializers.ModelSerializer):
-    category = SimpleCategorySerializer(read_only=True)
+    category = CategorySerializer(read_only=True)
     image_set = ImageSerializer(read_only=True, many=True)
 
     class Meta:

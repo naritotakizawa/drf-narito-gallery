@@ -1,11 +1,11 @@
 from django.db.models import Count, Q
 from rest_framework import generics, pagination
 from .models import Category, Product
-from .serializers import CategorySerializer, SimpleProductSerializer, ProductSerializer
+from .serializers import CategoryWithProductCountSerializer, ProductSerializer
 
 
 class CategoryList(generics.ListAPIView):
-    serializer_class = CategorySerializer
+    serializer_class = CategoryWithProductCountSerializer
 
     def get_queryset(self):
         filter = Q()
@@ -19,12 +19,12 @@ class CategoryList(generics.ListAPIView):
 
 
 class StandardResultsSetPagination(pagination.PageNumberPagination):
-    page_size = 12
+    page_size = 6
 
 
 class ProductList(generics.ListAPIView):
-    queryset = Product.objects.order_by('-created_at')
-    serializer_class = SimpleProductSerializer
+    queryset = Product.objects.select_related('category').prefetch_related('image_set').order_by('-created_at')
+    serializer_class = ProductSerializer
     pagination_class = StandardResultsSetPagination
 
     def get_queryset(self):
